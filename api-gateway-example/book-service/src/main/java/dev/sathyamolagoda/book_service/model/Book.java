@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
@@ -27,7 +26,7 @@ public class Book extends Base {
     private String format;
     private String edition;
     private String pageCount;
-    private Author author;
+    private String author;
     private String coverImage;
     private String price;
     private String rating;

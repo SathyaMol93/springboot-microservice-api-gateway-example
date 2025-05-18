@@ -21,7 +21,7 @@ public class Review extends Base {
     private String userName;
     private String userAvatar;
     private String bookId;
-    private String rating;
+    private Integer rating;
 
     @DynamoDbPartitionKey
     public UUID getId() {

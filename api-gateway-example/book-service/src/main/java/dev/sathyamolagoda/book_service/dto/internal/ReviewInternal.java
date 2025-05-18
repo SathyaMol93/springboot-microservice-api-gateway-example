@@ -9,6 +9,6 @@ public class ReviewInternal {
 
     private UUID id;
     private String bookId;
-    private String rating;
+    private Integer rating;
 
 }
