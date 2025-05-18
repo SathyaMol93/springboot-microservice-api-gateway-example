@@ -14,6 +14,5 @@ public class BookCreateRequest extends BookBase {
     private String publishedDate;
     private String authorId;
     private String createdBy;
-    private LocalDateTime createdAt;
 
 }

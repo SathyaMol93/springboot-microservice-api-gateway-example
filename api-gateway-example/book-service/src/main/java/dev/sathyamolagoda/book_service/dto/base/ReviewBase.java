@@ -1,7 +1,6 @@
 package dev.sathyamolagoda.book_service.dto.base;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 @Data
 public abstract class ReviewBase{
