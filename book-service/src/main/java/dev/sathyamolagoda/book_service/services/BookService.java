@@ -6,6 +6,10 @@ import dev.sathyamolagoda.book_service.dto.update.BookUpdateRequest;
 
 import java.util.List;
 
+/**
+ * Service interface for managing books.
+ * Provides methods for CRUD operations on books.
+ */
 public interface BookService {
     List<BookResponse> getAllBooks();
 

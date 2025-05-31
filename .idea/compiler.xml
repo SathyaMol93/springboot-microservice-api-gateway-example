@@ -8,7 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="api-gateway" />
-        <module name="service-registery" />
+        <module name="service-registry" />
       </profile>
       <profile name="Annotation profile for book-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -30,6 +30,9 @@
         <module name="order-service" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="service-registery" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
@@ -37,6 +40,7 @@
       <module name="book-service" options="-parameters" />
       <module name="order-service" options="-parameters" />
       <module name="service-registery" options="-parameters" />
+      <module name="service-registry" options="-parameters" />
       <module name="user-service" options="-parameters" />
     </option>
   </component>

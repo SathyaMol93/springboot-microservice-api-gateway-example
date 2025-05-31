@@ -10,8 +10,20 @@ import dev.sathyamolagoda.book_service.model.Book;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/**
+ * This class is responsible for mapping between Book entity and its corresponding DTOs.
+ * It provides methods to convert from DTOs to entities and vice versa, as well as to update
+ * existing entities with data from update requests.
+ */
 public class BookMapper {
 
+    /**
+     * This method converts a BookCreateRequest DTO to a Book entity.
+     * It generates a unique ID for the book, sets the creation and update timestamps,
+     * and copies the values from the DTO to the entity.
+     * @param dto The BookCreateRequest DTO containing the book data.
+     * @return The corresponding Book entity.
+     */
     public static Book toEntity(BookCreateRequest dto) {
         Book book = new Book();
         book.setId(UUID.randomUUID());
@@ -37,7 +49,13 @@ public class BookMapper {
         return book;
     }
 
-    public static Book updateEntity(Book book, BookUpdateRequest dto) {
+    /**
+     * This method updates an existing Book entity with data from a BookUpdateRequest DTO.
+     * It updates the entity's properties with the values from the DTO, except for the ID.
+     * @param book The Book entity to be updated.
+     * @param dto The BookUpdateRequest DTO containing the updated book data.
+     */
+    public static void updateEntity(Book book, BookUpdateRequest dto) {
         book.setTitle(dto.getTitle());
         book.setDescription(dto.getDescription());
         book.setPublisher(dto.getPublisher());
@@ -50,9 +68,15 @@ public class BookMapper {
         book.setPrice(dto.getPrice());
         book.setLastUpdatedBy(dto.getLastUpdatedBy()); // This will be replaced by the logged user context in spring security example.
         book.setLastUpdatedAt(LocalDateTime.now());
-        return book;
     }
 
+    /**
+     * This method converts a Book entity to a BookResponse DTO.
+     * It copies the values from the entity to the DTO, including the author information.
+     * @param book The Book entity to be converted.
+     * @param author The AuthorResponse DTO containing the author information.
+     * @return The corresponding BookResponse DTO.
+     */
     public static BookResponse toResponse(Book book, AuthorResponse author) {
         BookResponse response = new BookResponse();
         response.setId(book.getId());
@@ -78,6 +102,12 @@ public class BookMapper {
         return response;
     }
 
+    /**
+     * This method converts a Book entity to a BookInternal DTO.
+     * It copies the values from the entity to the DTO, including the average rating and review count.
+     * @param book The Book entity to be converted.
+     * @return The corresponding BookInternal DTO.
+     */
     public static BookInternal toInternal(Book book) {
         BookInternal internal = new BookInternal();
         internal.setId(book.getId());

@@ -13,6 +13,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Implementation of the BookStatsService interface.
+ * This class handles the business logic related to book statistics.
+ */
 @AllArgsConstructor
 @Service
 public class BookStatsServiceImpl implements BookStatsService {
@@ -20,6 +24,13 @@ public class BookStatsServiceImpl implements BookStatsService {
     private final ReviewRepositoryImpl reviewRepository;
     private final BookRepositoryImpl bookRepository;
 
+    /**
+     * Updates the rating and review count of a book based on the reviews associated with it.
+     *
+     * @param bookId The ID of the book to update.
+     * @throws ResourceNotFoundException If the book is not found.
+     * @throws BadRequestException       If the provided bookId is not a valid UUID.
+     */
     @Override
     public void updateBookRatingAndReviewCount(String bookId) {
         try {

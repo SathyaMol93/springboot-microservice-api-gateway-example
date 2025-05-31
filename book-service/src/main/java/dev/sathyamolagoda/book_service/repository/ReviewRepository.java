@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * This interface defines the contract for the ReviewRepository.
+ * It provides methods to perform CRUD operations on Review entities.
+ */
 public interface ReviewRepository {
     Optional<Review> findById(UUID id);
 

@@ -7,6 +7,11 @@ import lombok.EqualsAndHashCode;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/**
+ * This class represents the response object for an Author.
+ * It extends the AuthorBase class and adds additional fields for tracking
+ * the creation and last update details of the Author.
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class AuthorResponse extends AuthorBase {

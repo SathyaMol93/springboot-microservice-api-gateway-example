@@ -16,12 +16,21 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Implementation of the AuthorService interface.
+ * Provides methods for managing authors in the application.
+ */
 @AllArgsConstructor
 @Service
 public class AuthorServiceImpl implements AuthorService {
 
     private final AuthorRepository authorRepository;
 
+    /**
+     * Retrieves a list of all authors.
+     *
+     * @return A list of AuthorResponse objects representing all authors.
+     */
     @Override
     public List<AuthorResponse> findAllAuthors() {
         List<Author> authors = authorRepository.findAll();
@@ -30,6 +39,14 @@ public class AuthorServiceImpl implements AuthorService {
                 .toList();
     }
 
+    /**
+     * Retrieves an author by their ID.
+     *
+     * @param id The ID of the author to retrieve.
+     * @return An AuthorResponse object representing the author.
+     * @throws ResourceNotFoundException If the author with the given ID is not found.
+     * @throws BadRequestException       If the provided ID is not a valid UUID.
+     */
     @Override
     public AuthorResponse findAuthorById(String id) {
         try {
@@ -41,6 +58,12 @@ public class AuthorServiceImpl implements AuthorService {
         }
     }
 
+    /**
+     * Creates a new author.
+     *
+     * @param authorCreateRequest The request object containing the author details.
+     * @return An AuthorResponse object representing the created author.
+     */
     @Override
     public AuthorResponse createAuthor(AuthorCreateRequest authorCreateRequest) {
         Author author = AuthorMapper.toEntity(authorCreateRequest);
@@ -48,6 +71,15 @@ public class AuthorServiceImpl implements AuthorService {
         return AuthorMapper.toResponse(savedAuthor);
     }
 
+    /**
+     * Updates an existing author.
+     *
+     * @param id                  The ID of the author to update.
+     * @param authorUpdateRequest The request object containing the updated author details.
+     * @return An AuthorResponse object representing the updated author.
+     * @throws ResourceNotFoundException If the author with the given ID is not found.
+     * @throws BadRequestException       If the provided ID is not a valid UUID.
+     */
     @Override
     public AuthorResponse updateAuthor(String id, AuthorUpdateRequest authorUpdateRequest) {
         try {
@@ -61,6 +93,13 @@ public class AuthorServiceImpl implements AuthorService {
         }
     }
 
+    /**
+     * Deletes an author by their ID.
+     *
+     * @param id The ID of the author to delete.
+     * @throws ResourceNotFoundException If the author with the given ID is not found.
+     * @throws BadRequestException       If the provided ID is not a valid UUID.
+     */
     @Override
     public void deleteAuthor(String id) {
         try {

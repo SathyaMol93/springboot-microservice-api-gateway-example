@@ -6,6 +6,10 @@ import dev.sathyamolagoda.book_service.dto.update.AuthorUpdateRequest;
 
 import java.util.List;
 
+/**
+ * Service interface for managing authors.
+ * Provides methods for CRUD operations on authors.
+ */
 public interface AuthorService {
     List<AuthorResponse> findAllAuthors();
 

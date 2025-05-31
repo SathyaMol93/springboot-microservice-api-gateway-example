@@ -9,6 +9,10 @@ import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbParti
 
 import java.util.UUID;
 
+/**
+ * This class represents an Author entity.
+ * It extends the Base class and includes fields for author details.
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor

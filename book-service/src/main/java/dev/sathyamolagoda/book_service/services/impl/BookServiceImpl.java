@@ -19,6 +19,10 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * Implementation of the BookService interface.
+ * Provides methods for managing books and authors.
+ */
 @AllArgsConstructor
 @Service
 public class BookServiceImpl implements BookService {
@@ -26,6 +30,13 @@ public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
 
+    /**
+     * Retrieves all books with their associated authors.
+     *
+     * @return A list of BookResponse objects containing book and author details.
+     * @throws ResourceNotFoundException If an author is not found for a book.
+     * @throws BadRequestException       If the UUID format is invalid.
+     */
     @Override
     public List<BookResponse> getAllBooks() {
         try {
@@ -53,7 +64,14 @@ public class BookServiceImpl implements BookService {
         }
     }
 
-
+    /**
+     * Retrieves a book by its ID along with its associated author.
+     *
+     * @param id The ID of the book to retrieve.
+     * @return A BookResponse object containing the book and author details.
+     * @throws ResourceNotFoundException If the book or author is not found.
+     * @throws BadRequestException       If the provided ID is not a valid UUID.
+     */
     @Override
     public BookResponse getBookById(String id) {
         try {
@@ -69,6 +87,14 @@ public class BookServiceImpl implements BookService {
         }
     }
 
+    /**
+     * Creates a new book.
+     *
+     * @param bookCreateRequest The request object containing the book details.
+     * @return A BookResponse object representing the created book.
+     * @throws ResourceNotFoundException If the author is not found.
+     * @throws BadRequestException       If the author ID is not a valid UUID.
+     */
     @Override
     public BookResponse createBook(BookCreateRequest bookCreateRequest) {
         try {
@@ -84,13 +110,22 @@ public class BookServiceImpl implements BookService {
         }
     }
 
+    /**
+     * Updates an existing book.
+     *
+     * @param id                 The ID of the book to update.
+     * @param bookUpdateRequest The request object containing the updated book details.
+     * @return A BookResponse object representing the updated book.
+     * @throws ResourceNotFoundException If the book or author is not found.
+     * @throws BadRequestException       If the provided ID or author ID is not a valid UUID.
+     */
     @Override
     public BookResponse updateBook(String id, BookUpdateRequest bookUpdateRequest) {
         try {
             Book existingBook = bookRepository.findById(UUID.fromString(id))
                     .orElseThrow(() -> new ResourceNotFoundException("Book not found with ID: " + id));
-
-            Book savedBook = bookRepository.save(BookMapper.updateEntity(existingBook, bookUpdateRequest));
+            BookMapper.updateEntity(existingBook, bookUpdateRequest);
+            Book savedBook = bookRepository.save(existingBook);
 
             Author author = authorRepository.findById(UUID.fromString(savedBook.getAuthor()))
                     .orElseThrow(() -> new ResourceNotFoundException("Author not found with ID: " + savedBook.getAuthor()));
@@ -101,6 +136,13 @@ public class BookServiceImpl implements BookService {
         }
     }
 
+    /**
+     * Deletes a book by its ID.
+     *
+     * @param id The ID of the book to delete.
+     * @throws ResourceNotFoundException If the book is not found.
+     * @throws BadRequestException       If the provided ID is not a valid UUID.
+     */
     @Override
     public void deleteBook(String id) {
         try {

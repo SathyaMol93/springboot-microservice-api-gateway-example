@@ -5,6 +5,9 @@ import org.springframework.context.annotation.Configuration;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
+/**
+ * Configuration class for DynamoDB client and enhanced client
+ */
 @Configuration
 public class DynamoDbConfig {
 

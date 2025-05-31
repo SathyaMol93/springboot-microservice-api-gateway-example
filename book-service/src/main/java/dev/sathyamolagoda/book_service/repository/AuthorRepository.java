@@ -7,6 +7,10 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * This interface defines the contract for the AuthorRepository.
+ * It provides methods to perform CRUD operations on Author entities.
+ */
 public interface AuthorRepository {
     Optional<Author> findById(UUID id);
 

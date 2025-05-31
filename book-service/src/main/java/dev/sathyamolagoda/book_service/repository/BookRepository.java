@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * This interface defines the contract for the BookRepository.
+ * It provides methods to perform CRUD operations on Book entities.
+ */
 public interface BookRepository {
 
     Optional<Book> findById(UUID id);

@@ -9,6 +9,10 @@ import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbParti
 
 import java.util.UUID;
 
+/**
+ * This class represents a Review entity.
+ * It extends the Base class and includes fields for review details.
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor

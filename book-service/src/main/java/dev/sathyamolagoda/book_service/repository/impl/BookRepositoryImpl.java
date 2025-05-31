@@ -25,12 +25,21 @@ public class BookRepositoryImpl implements BookRepository {
         return enhancedClient.table(tableName, TableSchema.fromBean(Book.class));
     }
 
+    /**
+     * Find book by id
+     * @param id - book id
+     * @return Optional<Book>
+     */
     @Override
     public Optional<Book> findById(UUID id) {
         Book book = getBookTable().getItem(r -> r.key(k -> k.partitionValue(String.valueOf(id))));
         return Optional.ofNullable(book);
     }
 
+    /**
+     * Find all books
+     * @return List<Book>
+     */
     @Override
     public List<Book> findAll() {
         List<Book> books = new ArrayList<>();
@@ -38,18 +47,32 @@ public class BookRepositoryImpl implements BookRepository {
         return books;
     }
 
+    /**
+     * Save book
+     * @param book - book
+     * @return Book
+     */
     @Override
     public Book save(Book book) {
         getBookTable().putItem(book);
         return book;
     }
 
+    /**
+     * Save all books
+     * @param books - books
+     * @return List<Book>
+     */
     @Override
     public List<Book> saveAll(List<Book> books) {
         books.forEach(this::save);
         return books;
     }
 
+    /**
+     * Delete book by id
+     * @param id - book id
+     */
     @Override
     public void delete(UUID id) {
         getBookTable().deleteItem(r -> r.key(k -> k.partitionValue(id.toString())));
