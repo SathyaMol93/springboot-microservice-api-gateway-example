@@ -1,6 +1,5 @@
 package dev.sathyamolagoda.user_service.model;
 
-import dev.sathyamolagoda.book_service.model.Base;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -8,34 +7,26 @@ import lombok.NoArgsConstructor;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
 
+import java.util.List;
 import java.util.UUID;
 
+/**
+ * This class represents a Role entity in the application.
+ * It extends the Base class and includes additional fields for role details.
+ */
 @EqualsAndHashCode(callSuper = true)
+@DynamoDbBean
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@DynamoDbBean
-public class Book extends Base {
+public class Role extends Base{
 
-    private String title;
+    private String name; // e.g., ADMIN, USER
     private String description;
-    private String isbn;
-    private String publisher;
-    private String publishedDate;
-    private String genre;
-    private String language;
-    private String format;
-    private String edition;
-    private String pageCount;
-    private String author;
-    private String coverImage;
-    private String price;
-    private String rating;
-    private String reviewCount;
+    private List<String> permissionIds;
 
     @DynamoDbPartitionKey
     public UUID getId() {
         return super.getId();
     }
-
 }

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Repository
 @AllArgsConstructor
@@ -27,28 +28,28 @@ public class BookRepositoryImpl implements BookRepository {
 
     /**
      * Find book by id
+     *
      * @param id - book id
      * @return Optional<Book>
      */
     @Override
     public Optional<Book> findById(UUID id) {
-        Book book = getBookTable().getItem(r -> r.key(k -> k.partitionValue(String.valueOf(id))));
-        return Optional.ofNullable(book);
+        return Optional.ofNullable(getBookTable().getItem(r -> r.key(k -> k.partitionValue(String.valueOf(id)))));
     }
 
     /**
      * Find all books
+     *
      * @return List<Book>
      */
     @Override
     public List<Book> findAll() {
-        List<Book> books = new ArrayList<>();
-        getBookTable().scan().items().forEach(books::add);
-        return books;
+        return getBookTable().scan().items().stream().toList();
     }
 
     /**
      * Save book
+     *
      * @param book - book
      * @return Book
      */
@@ -60,6 +61,7 @@ public class BookRepositoryImpl implements BookRepository {
 
     /**
      * Save all books
+     *
      * @param books - books
      * @return List<Book>
      */
@@ -71,6 +73,7 @@ public class BookRepositoryImpl implements BookRepository {
 
     /**
      * Delete book by id
+     *
      * @param id - book id
      */
     @Override

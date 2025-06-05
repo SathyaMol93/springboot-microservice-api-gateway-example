@@ -1,6 +1,5 @@
 package dev.sathyamolagoda.user_service.model;
 
-import dev.sathyamolagoda.book_service.model.Base;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,19 +9,19 @@ import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbParti
 
 import java.util.UUID;
 
+/**
+ * This class represents a Permission entity in the application.
+ * It extends the Base class and includes additional fields for permission details.
+ */
 @EqualsAndHashCode(callSuper = true)
+@DynamoDbBean
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@DynamoDbBean
-public class Review extends Base {
+public class Permission extends Base{
 
-    private String review;
-    private String userId;
-    private String userName;
-    private String userAvatar;
-    private String bookId;
-    private Integer rating;
+    private String name; // e.g., "user:create", "user:delete"
+    private String description;
 
     @DynamoDbPartitionKey
     public UUID getId() {

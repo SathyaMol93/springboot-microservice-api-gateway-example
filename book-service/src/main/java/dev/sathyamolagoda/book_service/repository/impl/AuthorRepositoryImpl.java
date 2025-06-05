@@ -26,40 +26,39 @@ public class AuthorRepositoryImpl implements AuthorRepository {
 
     /**
      * Find author by id
+     *
      * @param id - author id
      * @return Optional<Author>
      */
     @Override
     public Optional<Author> findById(UUID id) {
-        Author author = getAuthorTable().getItem(r -> r.key(k -> k.partitionValue(String.valueOf(id))));
-        return Optional.ofNullable(author);
+        return Optional.ofNullable(getAuthorTable().getItem(r -> r.key(k -> k.partitionValue(String.valueOf(id)))));
     }
 
     /**
      * Find authors by ids
+     *
      * @param ids - author ids
      * @return List<Author>
      */
     @Override
     public List<Author> findAllById(Set<UUID> ids) {
-        List<Author> authors = new ArrayList<>();
-        ids.forEach(id -> authors.add(getAuthorTable().getItem(r -> r.key(k -> k.partitionValue(String.valueOf(id))))));
-        return authors;
+        return ids.stream().map(id -> getAuthorTable().getItem(r -> r.key(k -> k.partitionValue(String.valueOf(id))))).toList();
     }
 
     /**
      * Find all authors
+     *
      * @return List<Author>
      */
     @Override
     public List<Author> findAll() {
-        List<Author> authors = new ArrayList<>();
-        getAuthorTable().scan().items().forEach(authors::add);
-        return authors;
+        return getAuthorTable().scan().items().stream().toList();
     }
 
     /**
      * Save author
+     *
      * @param author - author
      * @return Author
      */
@@ -71,6 +70,7 @@ public class AuthorRepositoryImpl implements AuthorRepository {
 
     /**
      * Save all authors
+     *
      * @param authors - authors
      * @return List<Author>
      */
@@ -82,6 +82,7 @@ public class AuthorRepositoryImpl implements AuthorRepository {
 
     /**
      * Delete author by id
+     *
      * @param id - author id
      */
     @Override

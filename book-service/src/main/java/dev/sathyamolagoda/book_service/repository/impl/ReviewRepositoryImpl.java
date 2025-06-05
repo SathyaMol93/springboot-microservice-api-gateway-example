@@ -28,17 +28,18 @@ public class ReviewRepositoryImpl implements ReviewRepository {
 
     /**
      * Find review by id
+     *
      * @param id - review id
      * @return Optional<Review>
      */
     @Override
     public Optional<Review> findById(UUID id) {
-        Review review= getReviewTable().getItem(r -> r.key(k -> k.partitionValue(id.toString())));
-        return Optional.ofNullable(review);
+        return Optional.ofNullable(getReviewTable().getItem(r -> r.key(k -> k.partitionValue(id.toString()))));
     }
 
     /**
      * Find reviews by book id
+     *
      * @param bookId - book id
      * @return List<Review>
      */
@@ -49,6 +50,7 @@ public class ReviewRepositoryImpl implements ReviewRepository {
 
     /**
      * Save review
+     *
      * @param review - review
      * @return Review
      */
@@ -60,6 +62,7 @@ public class ReviewRepositoryImpl implements ReviewRepository {
 
     /**
      * Delete review by id
+     *
      * @param id - review id
      */
     @Override
