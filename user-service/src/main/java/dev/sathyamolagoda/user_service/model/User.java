@@ -25,6 +25,7 @@ public class User extends Base{
     private String email;
     private String fullName;
     private String phone;
+    private String avatar;
     private List<String> roleIds;
 
     @DynamoDbPartitionKey
