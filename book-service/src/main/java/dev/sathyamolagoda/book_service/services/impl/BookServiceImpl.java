@@ -1,5 +1,6 @@
 package dev.sathyamolagoda.book_service.services.impl;
 
+import dev.sathyamolagoda.book_service.constant.ErrorMessages;
 import dev.sathyamolagoda.book_service.dto.request.BookCreateRequest;
 import dev.sathyamolagoda.book_service.dto.response.BookResponse;
 import dev.sathyamolagoda.book_service.dto.update.BookUpdateRequest;
@@ -54,13 +55,13 @@ public class BookServiceImpl implements BookService {
                     .map(book -> {
                         UUID authorId = UUID.fromString(book.getAuthor());
                         Author author = Optional.ofNullable(authorMap.get(authorId))
-                                .orElseThrow(() -> new ResourceNotFoundException("Author not found with ID: " + authorId));
+                                .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.AUTHOR_NOT_FOUND + authorId));
                         return BookMapper.toResponse(book, AuthorMapper.toResponse(author));
                     })
                     .toList();
 
         } catch (IllegalArgumentException e) {
-            throw new BadRequestException("Invalid UUID format in book data", e);
+            throw new BadRequestException(ErrorMessages.INVALID_UUID_IN_DATA, e);
         }
     }
 
@@ -76,14 +77,14 @@ public class BookServiceImpl implements BookService {
     public BookResponse getBookById(String id) {
         try {
             Book book = bookRepository.findById(UUID.fromString(id))
-                    .orElseThrow(() -> new ResourceNotFoundException("Book not found with ID: " + id));
+                    .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.BOOK_NOT_FOUND + id));
 
             Author author = authorRepository.findById(UUID.fromString(book.getAuthor()))
-                    .orElseThrow(() -> new ResourceNotFoundException("Author not found with ID: " + book.getAuthor()));
+                    .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.AUTHOR_NOT_FOUND + book.getAuthor()));
 
             return BookMapper.toResponse(book, AuthorMapper.toResponse(author));
         } catch (IllegalArgumentException e) {
-            throw new BadRequestException("Invalid UUID format: " + id);
+            throw new BadRequestException(ErrorMessages.INVALID_UUID + id);
         }
     }
 
@@ -102,11 +103,11 @@ public class BookServiceImpl implements BookService {
             Book savedBook = bookRepository.save(book);
 
             Author author = authorRepository.findById(UUID.fromString(book.getAuthor()))
-                    .orElseThrow(() -> new ResourceNotFoundException("Author not found with ID: " + book.getAuthor()));
+                    .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.AUTHOR_NOT_FOUND + book.getAuthor()));
 
             return BookMapper.toResponse(savedBook, AuthorMapper.toResponse(author));
         } catch (IllegalArgumentException ex) {
-            throw new BadRequestException("Invalid UUID format: " + bookCreateRequest.getAuthorId());
+            throw new BadRequestException(ErrorMessages.INVALID_UUID + bookCreateRequest.getAuthorId());
         }
     }
 
@@ -123,16 +124,16 @@ public class BookServiceImpl implements BookService {
     public BookResponse updateBook(String id, BookUpdateRequest bookUpdateRequest) {
         try {
             Book existingBook = bookRepository.findById(UUID.fromString(id))
-                    .orElseThrow(() -> new ResourceNotFoundException("Book not found with ID: " + id));
+                    .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.BOOK_NOT_FOUND + id));
             BookMapper.updateEntity(existingBook, bookUpdateRequest);
             Book savedBook = bookRepository.save(existingBook);
 
             Author author = authorRepository.findById(UUID.fromString(savedBook.getAuthor()))
-                    .orElseThrow(() -> new ResourceNotFoundException("Author not found with ID: " + savedBook.getAuthor()));
+                    .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.AUTHOR_NOT_FOUND + savedBook.getAuthor()));
 
             return BookMapper.toResponse(savedBook, AuthorMapper.toResponse(author));
         } catch (IllegalArgumentException ex) {
-            throw new BadRequestException("Invalid UUID format: " + id);
+            throw new BadRequestException(ErrorMessages.INVALID_UUID + id);
         }
     }
 
@@ -147,10 +148,10 @@ public class BookServiceImpl implements BookService {
     public void deleteBook(String id) {
         try {
             Book book = bookRepository.findById(UUID.fromString(id))
-                    .orElseThrow(() -> new ResourceNotFoundException("Book not found with ID: " + id));
+                    .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.BOOK_NOT_FOUND + id));
             bookRepository.delete(book.getId());
         } catch (IllegalArgumentException ex) {
-            throw new BadRequestException("Invalid UUID format: " + id);
+            throw new BadRequestException(ErrorMessages.INVALID_UUID + id);
         }
     }
 }

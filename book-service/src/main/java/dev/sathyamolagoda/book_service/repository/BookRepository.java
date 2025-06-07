@@ -1,7 +1,6 @@
 package dev.sathyamolagoda.book_service.repository;
 
 import dev.sathyamolagoda.book_service.model.Book;
-import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 
 import java.util.List;
 import java.util.Optional;

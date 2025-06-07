@@ -1,5 +1,7 @@
 package dev.sathyamolagoda.book_service.services.impl;
 
+import dev.sathyamolagoda.book_service.constant.ErrorMessages;
+import dev.sathyamolagoda.book_service.dto.request.ReviewCreateRequest;
 import dev.sathyamolagoda.book_service.dto.response.ReviewResponse;
 import dev.sathyamolagoda.book_service.dto.update.ReviewUpdateRequest;
 import dev.sathyamolagoda.book_service.exception.BadRequestException;
@@ -45,7 +47,7 @@ public class ReviewServiceImpl implements ReviewService {
      * @return A ReviewResponse object representing the created review.
      */
     @Override
-    public ReviewResponse createReview(dev.sathyamolagoda.book_service.dto.request.ReviewCreateRequest reviewCreateRequest) {
+    public ReviewResponse createReview(ReviewCreateRequest reviewCreateRequest) {
         Review savedReview = reviewRepository.save(ReviewMapper.toEntity(reviewCreateRequest));
         bookStatsService.updateBookRatingAndReviewCount(savedReview.getBookId());
         return ReviewMapper.toResponse(savedReview);
@@ -63,14 +65,15 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public ReviewResponse updateReview(String id, ReviewUpdateRequest reviewUpdateRequest) {
         try {
-            Review existingReview = reviewRepository.findById(UUID.fromString(id)).orElseThrow(() -> new ResourceNotFoundException("Book not found with ID: " + id));
+            Review existingReview = reviewRepository.findById(UUID.fromString(id)).orElseThrow(() ->
+                    new ResourceNotFoundException(ErrorMessages.REVIEW_NOT_FOUND + id));
             ReviewMapper.updateEntity(existingReview, reviewUpdateRequest);
             Review updatedReview = reviewRepository.save(existingReview);
             if (!Objects.equals(existingReview.getRating(), updatedReview.getRating()))
                 bookStatsService.updateBookRatingAndReviewCount(updatedReview.getBookId());
             return ReviewMapper.toResponse(updatedReview);
         } catch (IllegalArgumentException ex) {
-            throw new BadRequestException("Invalid UUID format: " + id);
+            throw new BadRequestException(ErrorMessages.INVALID_UUID + id);
         }
     }
 
@@ -85,11 +88,11 @@ public class ReviewServiceImpl implements ReviewService {
     public void deleteReview(String id) {
         try {
             Review review = reviewRepository.findById(UUID.fromString(id))
-                    .orElseThrow(() -> new ResourceNotFoundException("Review not found with ID: " + id));
+                    .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.REVIEW_NOT_FOUND + id));
             reviewRepository.delete(review.getId());
             bookStatsService.updateBookRatingAndReviewCount(review.getBookId());
         } catch (IllegalArgumentException ex) {
-            throw new BadRequestException("Invalid UUID format: " + id);
+            throw new BadRequestException(ErrorMessages.INVALID_UUID + id);
         }
     }
 }

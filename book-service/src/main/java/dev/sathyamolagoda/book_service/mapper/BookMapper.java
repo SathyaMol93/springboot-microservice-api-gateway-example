@@ -17,6 +17,10 @@ import java.util.UUID;
  */
 public class BookMapper {
 
+    private BookMapper() {
+        // Private constructor to prevent instantiation of this utility class.
+    }
+
     /**
      * This method converts a BookCreateRequest DTO to a Book entity.
      * It generates a unique ID for the book, sets the creation and update timestamps,

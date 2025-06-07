@@ -1,5 +1,6 @@
 package dev.sathyamolagoda.book_service.services.impl;
 
+import dev.sathyamolagoda.book_service.constant.ErrorMessages;
 import dev.sathyamolagoda.book_service.dto.request.AuthorCreateRequest;
 import dev.sathyamolagoda.book_service.dto.response.AuthorResponse;
 import dev.sathyamolagoda.book_service.dto.update.AuthorUpdateRequest;
@@ -51,10 +52,10 @@ public class AuthorServiceImpl implements AuthorService {
     public AuthorResponse findAuthorById(String id) {
         try {
             Author author = authorRepository.findById(UUID.fromString(id))
-                    .orElseThrow(() -> new ResourceNotFoundException("Author not found with ID: " + id));
+                    .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.AUTHOR_NOT_FOUND + id));
             return AuthorMapper.toResponse(author);
         } catch (IllegalArgumentException iae) {
-            throw new BadRequestException("Invalid UUID format: " + id);
+            throw new BadRequestException(ErrorMessages.INVALID_UUID + id);
         }
     }
 
@@ -84,12 +85,12 @@ public class AuthorServiceImpl implements AuthorService {
     public AuthorResponse updateAuthor(String id, AuthorUpdateRequest authorUpdateRequest) {
         try {
             Author author = authorRepository.findById(UUID.fromString(id))
-                    .orElseThrow(() -> new ResourceNotFoundException("Author not found with ID: " + id));
+                    .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.AUTHOR_NOT_FOUND + id));
             AuthorMapper.updateEntity(author, authorUpdateRequest);
             Author updatedAuthor = authorRepository.save(author);
             return AuthorMapper.toResponse(updatedAuthor);
         } catch (IllegalArgumentException iae) {
-            throw new BadRequestException("Invalid UUID format: " + id);
+            throw new BadRequestException(ErrorMessages.INVALID_UUID + id);
         }
     }
 
@@ -104,10 +105,10 @@ public class AuthorServiceImpl implements AuthorService {
     public void deleteAuthor(String id) {
         try {
             Author author = authorRepository.findById(UUID.fromString(id))
-                    .orElseThrow(() -> new ResourceNotFoundException("Author not found with ID: " + id));
+                    .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.AUTHOR_NOT_FOUND + id));
             authorRepository.delete(author.getId());
         } catch (IllegalArgumentException iae) {
-            throw new BadRequestException("Invalid UUID format: " + id);
+            throw new BadRequestException(ErrorMessages.INVALID_UUID + id);
         }
     }
 }

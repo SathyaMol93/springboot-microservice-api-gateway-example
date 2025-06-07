@@ -15,6 +15,10 @@ import java.util.UUID;
  */
 public class AuthorMapper {
 
+    private AuthorMapper() {
+        // Private constructor to prevent instantiation of this utility class.
+    }
+
     /**
      * This method converts an AuthorCreateRequest DTO to an Author entity.
      * It generates a unique ID for the author, sets the creation and update timestamps,

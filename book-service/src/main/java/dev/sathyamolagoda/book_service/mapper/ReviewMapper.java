@@ -16,6 +16,10 @@ import java.util.UUID;
  */
 public class ReviewMapper {
 
+    private ReviewMapper() {
+        // Private constructor to prevent instantiation of this utility class
+    }
+
     /**
      * This method converts a ReviewCreateRequest DTO to a Review entity.
      * It generates a unique ID for the review, sets the creation and update timestamps,

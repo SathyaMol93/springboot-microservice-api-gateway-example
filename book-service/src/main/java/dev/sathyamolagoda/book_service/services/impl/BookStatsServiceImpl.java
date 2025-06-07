@@ -1,5 +1,6 @@
 package dev.sathyamolagoda.book_service.services.impl;
 
+import dev.sathyamolagoda.book_service.constant.ErrorMessages;
 import dev.sathyamolagoda.book_service.exception.BadRequestException;
 import dev.sathyamolagoda.book_service.exception.ResourceNotFoundException;
 import dev.sathyamolagoda.book_service.model.Book;
@@ -40,12 +41,12 @@ public class BookStatsServiceImpl implements BookStatsService {
             double avg = reviews.stream().mapToInt(Review::getRating).average().orElse(0.0);
 
             Book book = bookRepository.findById(UUID.fromString(bookId))
-                    .orElseThrow(() -> new ResourceNotFoundException("Book not found with ID: " + bookId));
+                    .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.BOOK_NOT_FOUND + bookId));
             book.setRating(String.format("%.2f", avg));
             book.setReviewCount(String.valueOf(count));
             bookRepository.save(book);
         } catch (IllegalArgumentException ex) {
-            throw new BadRequestException("Invalid UUID format: " + bookId);
+            throw new BadRequestException(ErrorMessages.INVALID_UUID + bookId);
         }
     }
 }
