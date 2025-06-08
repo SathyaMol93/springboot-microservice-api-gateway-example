@@ -1,9 +1,9 @@
 package dev.sathyamolagoda.user_service.repository;
 
 import dev.sathyamolagoda.user_service.model.Permission;
-import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * This interface defines the contract for the PermissionRepository.
@@ -12,6 +12,8 @@ import java.util.List;
 public interface PermissionRepository {
 
     List<Permission> findAll();
+
+    Optional<Permission> findById(String id);
 
     Permission save(Permission permission);
 

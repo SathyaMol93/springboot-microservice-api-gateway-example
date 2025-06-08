@@ -34,8 +34,7 @@ public class AuthorServiceImpl implements AuthorService {
      */
     @Override
     public List<AuthorResponse> findAllAuthors() {
-        List<Author> authors = authorRepository.findAll();
-        return authors.stream()
+        return authorRepository.findAll().stream()
                 .map(AuthorMapper::toResponse)
                 .toList();
     }
@@ -67,9 +66,7 @@ public class AuthorServiceImpl implements AuthorService {
      */
     @Override
     public AuthorResponse createAuthor(AuthorCreateRequest authorCreateRequest) {
-        Author author = AuthorMapper.toEntity(authorCreateRequest);
-        Author savedAuthor = authorRepository.save(author);
-        return AuthorMapper.toResponse(savedAuthor);
+        return AuthorMapper.toResponse(authorRepository.save(AuthorMapper.toEntity(authorCreateRequest)));
     }
 
     /**

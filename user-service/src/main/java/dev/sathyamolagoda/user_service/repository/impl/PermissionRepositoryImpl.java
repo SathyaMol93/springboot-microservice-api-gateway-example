@@ -9,6 +9,7 @@ import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Implementation of the PermissionRepository interface.
@@ -33,6 +34,22 @@ public class PermissionRepositoryImpl implements PermissionRepository {
     public List<Permission> findAll() {
         return getPermissionTable().scan().items().stream().toList();
     }
+
+    /**
+     * Find permission by id
+     *
+     * @param id - permission id
+     * @return Optional<Permission>
+     */
+    @Override
+    public Optional<Permission> findById(String id) {
+        return Optional.ofNullable(getPermissionTable().getItem(r -> r.key(k -> k.partitionValue(String.valueOf(id)))));
+    }
+
+    /**
+     * Save permission
+     *
+     * @param permission - permiss
 
     /**
      * Save permission
